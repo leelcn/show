@@ -1,0 +1,227 @@
+<?php echo $this->doctype(); ?>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle($this->translate('Share\'NGo - the new mobility'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('description', '')
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <?php echo $this->headLink([
+                'rel' => 'shortcut icon',
+                'type' => 'image/x-icon',
+                'href' => $this->basePath() . '/img/favicon.ico'
+            ])
+            ->appendStylesheet('//fonts.googleapis.com/css?family=Open+Sans:400,700,600,300')
+            ->appendStylesheet($this->basePath('css/styles.css'), 'screen')
+            ->appendStylesheet($this->basePath('css/addons.css'), 'screen')
+            ->appendStylesheet($this->basePath('css/print.css'), 'print')
+            ->appendStylesheet($this->basePath('css/ie8.css'), 'screen', 'lte IE 8')
+            ->appendStylesheet('//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.3.15/slick.css')
+        ?>
+
+        <!-- Scripts -->
+        <?php $this->headScript()
+            ->prependScript('window.jQuery || document.write(\'<script src="js/vendor/jquery-1.8.2.min.js"><\/script>\')')
+            ->prependFile('//cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.2.1/jquery-migrate.min.js')
+            ->prependFile('//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js')
+            ->appendFile('//cdnjs.cloudflare.com/ajax/libs/nwmatcher/1.2.5/nwmatcher.min.js', 'text/javascript', ['conditional' => 'lt IE 9'])
+            ->appendFile('//cdnjs.cloudflare.com/ajax/libs/selectivizr/1.0.2/selectivizr-min.js', 'text/javascript', ['conditional' => 'lt IE 9'])
+            ->appendFile($this->basePath('js/jquery.backgroundSize.js'), 'text/javascript', ['conditional' => 'lte IE 8'])
+            ->appendFile('//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js')
+
+            ->appendFile('//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.0/less.min.js')
+            ->appendFile($this->basePath('js/jquery.cookiesdirective.js'));
+
+            if ($this->config('intercom', 'key')) {
+                $this->headScript()
+                    ->appendScript("var intercomAppId='".$this->config('intercom','key')."';")
+                    ->appendFile($this->basePath('js/intercom.js'), 'text/javascript');
+            }
+
+            if ($this->config('googleAnalytics', 'key')) {
+                $this->headScript()->appendScript(
+                    "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                    ga('create', '".$this->config('googleAnalytics', 'key')."', 'auto');
+                    ga('send', 'pageview');"
+                );
+            }
+
+            echo $this->headScript();
+            echo $this->headStyle();
+            echo $this->placeholder('google-track-adwords');
+            echo $this->placeholder('facebook-pixel');
+        ?>
+    </head>
+    <body <?= $this->isUserArea($this->currentRoute()) ? 'class="app"' : ''; ?>>
+        <!--[IE 9]>
+            <p class="chromeframe"><?= $this->translate('Stai usando un browser <strong>non supportato</strong>. Per favore <a href="http://browsehappy.com/">aggiorna il tuo browser</a> o <a href="http://www.google.com/chromeframe/?redirect=true">attiva Google Chrome Frame</a> per far diventare pi&ugrave; potente il tuo browser.'); ?></p>
+        <![endif]-->
+
+        <!-- outer -->
+        <div id="outer">
+            <!-- header -->
+            <header id="header" class="<?= $this->isUserArea($this->currentRoute()) ? 'clearfix' : 'emotional-header clearfix'; ?>">
+
+                <!-- show-nav-for-iphone -->
+                <button type="button" class="show-nav-for-iphone" data-toggle="collapse" data-target="#nav">
+                    <i class="fa fa-align-justify"></i>
+                </button><!-- show-nav-for-iphone -->
+
+                <!-- site-link -->
+                <a href="<?= $this->url('carsharing'); ?>" id="site-link">
+                    <h2><?= $this->translate('Share\'NGo - the new mobility'); ?></h2>
+                </a><!-- site-link -->
+
+                <!-- module-wrapper-menu -->
+                <div class="module-wrapper-menu clearfix">
+
+                    <?= $this->availableFleets(); ?>
+
+                    <!-- nav-collapse -->
+                    <div id="nav" class="nav-collapse collapse">
+
+                        <!-- nav -->
+                        <nav id="menu" class="block-menu block-navigation-menu">
+                            <h1 class="hidden"><?= $this->translate('Navigazione principale'); ?></h1>
+                            <ul>
+                                <li><a href="<?= $this->url('carsharing') ?>" class="<?= $this->currentRoute() == 'carsharing' ? 'active' : ''?>"><?= $this->translate('Car sharing'); ?></a></li>
+                                <li><a href="<?= $this->url('cosae') ?>" class="<?= $this->currentRoute() == 'cosae' ? 'active' : ''?>"><?= $this->translate('Chi &egrave; Share\'n GO?'); ?></a></li>
+                                <?php /*<li><a href="<?= $this->url('quantocosta') ?>" class="<?= $this->currentRoute() == 'quantocosta' ? 'active' : ''?>"><?= $this->translate('Quanto costa'); ?></a></li>*/?>
+                                <li><a href="<?= $this->url('comefunziona') ?>" class="<?= $this->currentRoute() == 'comefunziona' ? 'active' : ''?>"><?= $this->translate('Come funziona'); ?></a></li>
+                                <li><a href="<?= $this->url('faq') ?>" class="<?= $this->currentRoute() == 'faq' ? 'active' : ''?>"><?= $this->translate('Faq'); ?></a></li>
+                                <li><a href="http://www.sharengorental.com" target="_blank" class="noleggio"><?= $this->translate('Noleggio'); ?></a></li>
+                                <li><a href="<?= $this->url('contatti') ?>" class="<?= $this->currentRoute() == 'contatti' ? 'active' : ''?>"><?= $this->translate('Contatti'); ?></a></li>
+                            </ul>
+                        </nav>
+                        <!-- nav -->
+
+                    </div>
+                    <!-- nav-collapse -->
+
+                    <!-- block-user-action -->
+                    <div class="block-user-action block-menu">
+                        <ul>
+                            <?php if($this->loggedUser): ?>
+                                <li><a href="<?php echo $this->url('area-utente'); ?>"><i class="fa fa-user"></i> <?= $this->translate('Area riservata'); ?></a></li>
+                                <li><a href="<?php echo $this->url('logout'); ?>"><i class="fa fa-user-times"></i> <?= $this->translate('Log out'); ?></a></li>
+                            <?php else: ?>
+                                <li><a href="<?= $this->url('login') ?>"><i class="fa fa-user"></i><?= $this->translate('Login'); ?></a></li>
+                                <li><a href="<?= $this->url('signup') ?>"><i class="fa fa-user-plus"></i><?= $this->translate('Registrati'); ?></a></li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                    <!-- block-menu-languages -->
+
+                </div>
+                <!-- module-wrapper-menu -->
+
+            </header>
+            <!-- header -->
+
+            <?php echo $this->content; ?>
+        </div>
+        <!-- outer -->
+
+        <!-- footer -->
+        <footer id="footer">
+            <!-- content -->
+            <div class="content clearfix">
+                <!-- block-footer -->
+                <div class="block-footer bw-f w-1-3">
+                    <p>
+                        <span class="font-weight bold"><?= $this->translate('Share \'N Go') ?></span><br>
+                        <?= $this->translate('è un servizio di C.S. Group S.p.A.') ?><br>
+                        <span class="font-weight semibold"><?= $this->translate('Sede Legale') ?>:</span><br>
+                        <?= $this->translate('Via dei Pelaghi 162, 57124 - Livorno (LI)') ?><br>
+                            <?= $this->translate('Codice Fiscale e Partita IVA') ?> n. 01769950492<br>
+                            <?= $this->translate('Numero REA') ?> LI - 156608<br>
+                            <?= $this->translate('Telefono') ?>: <a href="tel:05861733556"> 0586.1733556</a><br>
+                            <?= $this->translate('Fax') ?>: <a href="fax:05861975771"> 0586.1975771</a><br>
+                            <?= $this->translate('E-mail') ?>: <b><a href="mailto:servizioclienti@sharengo.eu">servizioclienti@sharengo.eu</a></b>
+                        <br>
+                        <span class="font-weight semibold"><?= $this->translate('Sede operativa') ?>:</span><br>
+                        <?= $this->translate('Via San Martino, 7 – 20122 Milano (MI)') ?>
+                    </p>
+                </div>
+                <!-- block-footer -->
+                <!-- block-footer -->
+                <div class="block-footer bw-f w-1-3">
+                    <div class="badge-green-number">
+                        <h2 class="block-title"><i class="fa fa-phone-square"></i> <?= $this->translate('Servizio clienti'); ?></h2>
+                        <a href="tel:05861975772">0586.1975772</a>
+                    </div>
+                </div>
+                <!-- block-footer -->
+                <!-- block-footer -->
+                <div class="block-footer last bw-f w-1-3">
+                    <ul class="simple-list">
+                        <li><a href="<?= $this->basePath('pdf/Informativa_Privacy.pdf'); ?>"><?= $this->translate('Privacy'); ?></a></li>
+                        <li><a href="<?= $this->basePath('pdf/Regolamento_Sharengo.pdf'); ?>"><?= $this->translate('Regolamento e tariffe'); ?></a></li>
+                        <li><a href="<?= $this->url('contatti') ?>"><?= $this->translate('Contatti'); ?></a></li>
+                        <li><a href="<?= $this->url('faq') ?>"><?= $this->translate('Faq'); ?></a></li>
+                        <li><a href="<?= $this->basePath('pdf/Come_si_usa_un_equomobile.pdf'); ?>"><?= $this->translate('Come si usa un\'equomobile'); ?></a></li>
+                    </ul>
+                </div>
+                <!-- block-footer -->
+            </div>
+            <!-- content -->
+        </footer>
+        <!-- footer -->
+
+        <?php if($this->isUserArea($this->currentRoute())): ?>
+            <style>
+                .block-navigation-menu ul {
+                    text-align:center !important;
+                }
+            </style>
+        <?php endif; ?>
+        <?php
+            $this->inlineScript()
+                ->appendFile($this->basePath('js/respond.min.js'))
+                ->appendFile($this->basePath('js/bootstrap.min.js'))
+                ->appendFile('//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.3.15/slick.min.js')
+                ->appendFile($this->basePath('js/slick-script.js'))
+                ->appendFile($this->basePath('js/main.js'))
+                ->appendFile($this->basePath('js/js.cookie.js'))
+                ->appendScript('
+                     // Using $(document).ready never hurts
+                    $(document).ready(function(){
+
+                        // Cookie setting script wrapper
+                        var cookieScripts = function () {
+                            // Loading external javascript file
+                            $.cookiesDirective.loadScript({
+                                uri:"external.js",
+                                appendTo: "eantics"
+                            });
+                        }
+
+                        $.cookiesDirective({
+                            privacyPolicyUri: "'.$this->basePath('pdf/Informativa_Privacy.pdf').'",
+                            explicitConsent: false,
+                            position : "bottom",
+                            duration: 999999,
+                            message: "I cookie ci aiutano a fornire i nostri servizi. Utilizzando tali servizi, accetti l\'utilizzo dei cookie da parte nostra. Per maggiori dettagli leggi la nostra",
+                            scriptWrapper: cookieScripts,
+                            backgroundColor: "#000000",
+                            linkColor: "#ffffff"
+                        });
+                    });
+                ');
+            echo $this->inlineScript()
+        ?>
+    </body>
+</html>

@@ -1,0 +1,92 @@
+<!-- main -->
+<div id="main" class="detect-window-height">
+
+    <!-- module-wrapper-app -->
+    <div class="module-wrapper-app">
+
+        <!-- module-column-app sx -->
+        <div class="module-column-app side-sx">
+
+            <a class="btn-toogle-column-app js-toogle-column-app"><i class="fa fa-angle-left"></i></a>
+
+            <!-- block-nav-app -->
+            <nav class="block-nav-app">
+                <?php echo $this->partial('partials/menu-user-area', ['route' => 'pin']); ?>
+            </nav>
+            <!-- block-nav-app -->
+
+        </div>
+        <!-- module-column-app sx -->
+
+        <!-- module-column-app dx -->
+        <div class="module-column-app side-dx">
+
+            <div class="module-heading-app">
+                <h1 class="module-main-title"><?= $this->translate('PIN'); ?></h1>
+                <?php echo $this->partial('partials/welcome-user-area'); ?>
+            </div>
+
+            <div class="module-column-app-content clearfix">
+
+                <!-- module-sharing-resmume -->
+                <div class="module-sharing-resmume padding-top">
+
+                    <div style="float: left;">
+                        <div class="pin-title">
+                            <?= $this->translate('QUESTO E’ IL PIN CHE TI SERVIRA’ PER UTILIZZARE UN’EQUOMOBILE'); ?>
+                        </div>
+
+                        <div style="width:100%; overflow:hidden">
+
+                            <div id="pin" class="pin-box">
+                                <?php echo $this->layout()->loggedUser->getPrimaryPin(); ?>
+                            </div>
+
+                            <div class="pin-warning" style="font-size: 16px !important;">
+                                <?= $this->translate('ATTENZIONE: MEMORIZZALO IN LUOGO SICURO E NON DARLO AD ALTRI'); ?>
+                            </div>
+
+                        </div>
+
+                        <div class="pin-info">
+                            <a href="<?= $this->url('comefunziona'); ?>">
+                                <?= $this->translate('Guarda come si usa'); ?>
+                            </a>
+
+                            <div style="float: right">
+                                <?= $this->translate('Vuoi anche una CARD APRIPORTA associata al tuo account?'); ?><br />
+                                <span style="color: #ff0000"><?= $this->translate('CLICCA SULL’IMMAGINE DELLA CARTA'); ?></span> <?= $this->translate('per inoltrare la tua richiesta'); ?>.
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div style="float: left; min-width: 350px; margin-left: 30px; min-height: 200px; overflow:hidden;">
+                        <a href="mailto:servizioclienti@sharengo.eu?subject=<?= $this->translate("RICHIESTA DI CARD SHARE’NGO"); ?>">
+                            <img src="/images/carta_web.png" width="150" style="float: left; min-width: 150px; margin-right: 10px;">
+                        </a>
+                        <a href="mailto:servizioclienti@sharengo.eu?subject=<?= $this->translate("RICHIESTA DI CARD SHARE’NGO"); ?>">
+                            <img src="/images/carta_web_retro.png" width="150" style="min-width: 150px;">
+                        </a>
+
+                        <div style="margin-top: 10px; max-width: 350px; margin-left: 10px;">
+                            <?= $this->translate("Ti arriverà su richiesta gratuitamente a casa in una settimana o puoi anche ritirarla c/o i nostri uffici"); ?>.
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <!-- module-sharing-resmume -->
+
+            </div>
+            <!-- module-column-app-content -->
+
+        </div>
+        <!-- module-column-app dx -->
+
+    </div>
+    <!-- module-wrapper-app -->
+
+</div>
+<!-- main -->

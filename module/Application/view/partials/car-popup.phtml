@@ -1,0 +1,139 @@
+<?php
+
+// Find out if a user is logged in
+$isLoggedIn = $this->IsLoggedIn();
+
+$userId = '';
+
+$userEnabled = false;
+if ($isLoggedIn)
+{
+    $user = $this->LoginProvider();
+    $userId = $user->getId();
+    $userEnabled = $user->getEnabled();
+}
+
+?>
+
+<!-- module-modal -->
+<div id="car-popup" class="module-modal car-popup">
+    <!-- modal-overlay -->
+    <div class="modal-overlay">
+        <!-- module-pop-up -->
+        <div class="module-pop-up" style="margin:10% auto;">
+
+            <a id="btn-close" class="btn-close"><i class="fa fa-close"></i></a>
+
+            <!-- module-pop-up-content -->
+            <div class="module-pop-up-content">
+
+                <!-- block-car-data -->
+                <div class="block-car-data bg-ct4 clearfix">
+
+                    <div class="block-heading text-align-center">
+                        <span class="block-info"><?= $this->translate('Auto scelta'); ?></span>
+                        <h1 id="licence-plate" class="block-title"></h1>
+                    </div>
+
+                    <!-- block-content -->
+                    <div class="block-content clearfix">
+
+                        <!-- block-column -->
+                        <div id="left-column" class="block-column bw-f w-2-4">
+                            <div class="block-image js-car-image"><img src="images/car.jpg" style="border: none" alt=""></div>
+
+                            <!-- block-label-status -->
+                            <div class="block-label-status">
+                                <span class="block-info"><?= $this->translate('Stato interni'); ?></span>
+                                <div class="block-bar">
+                                    <!-- value are w25, w50, w75, w100 -->
+                                    <div id="int_cleanliness" class="block-bar-value"></div>
+                                </div>
+                            </div>
+                            <!-- block-label-status -->
+
+                            <!-- block-label-status -->
+                            <div class="block-label-status">
+                                <span class="block-info"><?= $this->translate('Stato esterni'); ?></span>
+                                <div class="block-bar">
+                                    <div id="ext_cleanliness" class="block-bar-value"></div>
+                                </div>
+                            </div>
+                            <!-- block-label-status -->
+
+                        </div>
+                        <!-- block-column -->
+
+                        <div id="right-column" class="block-column last bw-f w-2-4">
+
+                            <!-- block-wrapper-car-data-info -->
+                            <div class="block-wrapper-car-data-info bg-ct4">
+                                <!-- block-car-data-info -->
+                                <div id="block-right-top" class="block-car-data-info">
+                                    <span class="block-data-name"><i class="fa fa-map-marker"></i> <?= $this->translate('Dove si trova'); ?></span>
+                                    <span id="location" class="block-data-value"></span>
+                                </div>
+                                <!-- block-car-data-info -->
+                                <!-- block-car-data-info -->
+                                <div class="block-car-data-info">
+                                    <span id="block-right-bottom-title" class="block-data-name">
+                                        <i id="circle-icon" class="fa fa-sun-o"></i>
+                                        <?= $this->translate('Autonomia'); ?>
+                                    </span>
+                                    <span class="block-data-value">
+                                        <span id="block-right-bottom-text"></span>
+                                        <a id="coverage" class="btn-link small ct2 pull-right"><?= $this->translate('Verifica copertura '); ?><i class="fa fa-smile-o"></i></a>
+                                    </span>
+                                </div>
+                                <!-- block-car-data-info -->
+
+                                <div id="btn-reserve" class="block-wrapper-btn">
+                                    <a id="reserve-text" <?php if (!$isLoggedIn) echo 'href="' . $this->url('login') . '"'; ?>
+                                     class="btn-link ct3"><i class="fa fa-circle-o-notch fa-spin"></i></a>
+                                </div>
+
+                                <div id="step2-buttons" class="block-wrapper-btn" style="display:none">
+                                    <button id="btn-back" class="reset pull-left"><i class="fa fa-angle-left"></i> <?= $this->translate('Annulla'); ?></button>
+                                    <button id="btn-confirm" class="pull-right ct2"></button>
+                                </div>
+
+                                <div>
+                                    <button id="btn-done" class="ct2" style="display:none; margin:0 auto;"><?= $this->translate('Chiudi'); ?> <i class="fa fa-check"></i></button>
+                                </div>
+
+                            </div>
+                            <!-- block-wrapper-car-data-info -->
+
+                        </div>
+                    </div>
+                    <!-- block-content -->
+                </div>
+                <!-- block-car-data -->
+
+            </div>
+            <!-- module-pop-up-content -->
+
+        </div>
+        <!-- module-pop-up -->
+    </div>
+    <!-- modal-overlay -->
+</div>
+<!-- module-modal -->
+
+<script>
+var isLoggedIn = <?php if ($isLoggedIn) echo 'true'; else echo 'false'; ?>;
+var userId = '<?php echo $userId; ?>';
+var userEnabled = <?php echo $userEnabled ? "true" : "false"; ?>;
+// text to be shown in second popup
+var textRemember = '<?= $this->translate("Ricorda che dovrai avere con te lo smartphone per poter aprire l\'auto, oppure la tessera. Ti consigliamo di non utilizzare l\'auto se l\'autonomia è al di sotto del 20% di carica"); ?>';
+var titleRemember = '<?= $this->translate("Ricorda che:"); ?>';
+var textReservationRemoved = '<?= $this->translate("Prenotazione annullata"); ?>';
+var textReservationRemovedNot = '<?= $this->translate("Impossibile annullare prenotazione"); ?>';
+var titleMilage = '<?= $this->translate("Autonomia"); ?>';
+var textReservationCompleted = '<?= $this->translate("Prenotazione effettuata"); ?>';
+var textReservationCompletedNot = '<?= $this->translate("L\'auto è già occupata"); ?>';
+var textMileage = '<?= $this->translate(" km"); ?>';
+var textButtonConfirm = '<?= $this->translate("Conferma"); ?> <i class="fa fa-angle-right"></i>'
+</script>
+<script type="text/javascript" src="js/car-popup.js"></script>
+
